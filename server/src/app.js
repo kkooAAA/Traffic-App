@@ -7,7 +7,10 @@ import commentRoutes from "./routes/commentRoutes.js";
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST", "DELETE"],
+}));
 
 app.use(express.json());
 
