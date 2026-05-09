@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background: black;
+  overflow: hidden;
+}
+
+.leaflet-container {
+  z-index: 1;
+}
+
+.relative {
+  z-index: 10;
+}
+
+@layer utilities {
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
