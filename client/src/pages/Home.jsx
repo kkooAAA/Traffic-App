@@ -14,7 +14,7 @@ import IncidentForm from "../components/IncidentForm";
 import Dashboard from "../components/Dashboard";
 
 const socket = io(
-    "http://localhost:5000"
+    import.meta.env.VITE_API_BASE_URL
 );
 
 function Home() {
