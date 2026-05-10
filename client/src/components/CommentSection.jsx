@@ -160,7 +160,7 @@ function CommentSection({ incidentId, socket }) {
                                     <div className="flex gap-2 justify-end">
                                         <button 
                                             onClick={() => setEditingComment(null)}
-                                            className="text-[10px] bg-zinc-200 px-2 py-0.5 rounded"
+                                            className="text-[10px] text-gray-900 bg-zinc-200 px-2 py-0.5 rounded"
                                         >
                                             {t.cancel}
                                         </button>
