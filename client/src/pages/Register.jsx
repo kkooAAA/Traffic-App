@@ -89,6 +89,7 @@ function Register() {
 
                 <div className="mt-6 text-center">
                     <button 
+                        type="button"
                         onClick={() => navigate("/privacy")}
                         className="text-[10px] text-zinc-600 hover:text-zinc-400 transition"
                     >
