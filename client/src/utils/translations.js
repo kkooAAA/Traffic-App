@@ -27,6 +27,16 @@ export const translations = {
     yours: "YOURS",
     login_to_comment: "Please login to comment",
     toll_discount: "TOLL DISCOUNT",
+    privacy_policy: "Privacy Policy",
+    privacy_desc: "We value your privacy. Your location data and reports are used strictly to improve road safety for the community.",
+    privacy_sections: {
+      collection: "Information We Collect",
+      collection_desc: "We collect your email, username, and location data (GPS coordinates) when you report an incident.",
+      usage: "How We Use Information",
+      usage_desc: "Your data is used to display reports on the map and calculate your credibility credits.",
+      sharing: "Sharing of Information",
+      sharing_desc: "Your incident reports and coordinates are public to inform other road users of hazards.",
+    },
     select_location: "Please click on the map to select a location first",
     severity: {
       low: "Low",
@@ -76,6 +86,16 @@ export const translations = {
     yours: "ของคุณ",
     login_to_comment: "กรุณาเข้าสู่ระบบเพื่อแสดงความคิดเห็น",
     toll_discount: "ส่วนลดค่าทางด่วน",
+    privacy_policy: "นโยบายความเป็นส่วนตัว",
+    privacy_desc: "เราให้ความสำคัญกับความเป็นส่วนตัวของคุณ ข้อมูลตำแหน่งและรายงานของคุณจะถูกใช้เพื่อช่วยปรับปรุงความปลอดภัยบนท้องถนนเท่านั้น",
+    privacy_sections: {
+      collection: "ข้อมูลที่เราเก็บรวบรวม",
+      collection_desc: "เรารวบรวมอีเมล ชื่อผู้ใช้ และข้อมูลตำแหน่ง (พิกัด GPS) เมื่อคุณรายงานเหตุการณ์",
+      usage: "การใช้งานข้อมูล",
+      usage_desc: "ข้อมูลของคุณจะถูกใช้เพื่อแสดงบนแผนที่ให้ผู้ใช้อื่นเห็น และใช้ในการคำนวณคะแนนความน่าเชื่อถือของคุณ",
+      sharing: "การแบ่งปันข้อมูล",
+      sharing_desc: "รายงานเหตุการณ์และจุดพิกัดของคุณจะถูกเปิดเผยต่อสาธารณะบนแผนที่เพื่อความปลอดภัยของผู้ใช้ทางท่านอื่น",
+    },
     select_location: "กรุณาคลิกเลือกตำแหน่งบนแผนที่ก่อน",
     severity: {
       low: "ต่ำ",

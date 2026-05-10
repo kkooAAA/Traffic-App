@@ -86,6 +86,15 @@ function Register() {
                         Login
                     </button>
                 </p>
+
+                <div className="mt-6 text-center">
+                    <button 
+                        onClick={() => navigate("/privacy")}
+                        className="text-[10px] text-zinc-600 hover:text-zinc-400 transition"
+                    >
+                        Privacy Policy
+                    </button>
+                </div>
             </form>
         </div>
     );
