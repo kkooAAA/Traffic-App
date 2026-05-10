@@ -34,6 +34,10 @@ router.delete(
       }
 
       await incident.deleteOne();
+      
+      const { getIO } = await import("../services/socket.js");
+      getIO().emit("deleteIncident", req.params.id);
+
       res.json({ message: "Deleted" });
     } catch (error) {
       res.status(500).json({ message: error.message });

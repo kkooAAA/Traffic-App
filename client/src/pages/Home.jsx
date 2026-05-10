@@ -13,9 +13,10 @@ import IncidentForm from "../components/IncidentForm";
 
 import Dashboard from "../components/Dashboard";
 
-const socket = io(
-    import.meta.env.VITE_API_BASE_URL
-);
+const API_URL = import.meta.env.VITE_API_BASE_URL || "";
+const SOCKET_URL = API_URL.replace("/api", "");
+
+const socket = io(SOCKET_URL);
 
 function Home() {
     const [incidents, setIncidents] =
@@ -44,13 +45,19 @@ function Home() {
     useEffect(() => {
         fetchIncidents();
 
+        socket.on("connect", () => {
+            console.log("Connected to socket server");
+        });
+
         socket.on(
             "newIncident",
             (incident) => {
-                setIncidents((prev) => [
-                    incident,
-                    ...prev,
-                ]);
+                console.log("New incident received:", incident);
+                setIncidents((prev) => {
+                    // Avoid duplicates
+                    if (prev.some(inc => inc._id === incident._id)) return prev;
+                    return [incident, ...prev];
+                });
             }
         );
 
@@ -101,7 +108,7 @@ function Home() {
 
         try {
             setSubmitting(true);
-            await api.post("/incidents", {
+            const response = await api.post("/incidents", {
                 ...form,
 
                 location: {
@@ -111,6 +118,13 @@ function Home() {
                         selectedLocation,
                 },
             });
+
+            // Optimistic/Immediate update
+            setIncidents(prev => {
+                if (prev.some(inc => inc._id === response.data._id)) return prev;
+                return [response.data, ...prev];
+            });
+
             setShowForm(false);
             setForm({
                 title: "",
