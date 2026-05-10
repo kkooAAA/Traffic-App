@@ -1,23 +1,33 @@
 import { useState } from "react";
 import CommentSection from "./CommentSection";
 
-function Dashboard({ incidents, deleteIncident, socket }) {
+function Dashboard({ incidents, deleteIncident, socket, onClose }) {
   const currentUserId = localStorage.getItem("userId");
   const [expandedIncident, setExpandedIncident] = useState(null);
 
   return (
     <div className="fixed inset-0 md:inset-auto md:top-20 md:right-5 flex items-center justify-center md:items-start md:justify-start z-[9999] pointer-events-none p-4">
-      <div className="bg-zinc-900 text-white p-6 rounded-3xl w-full max-w-[400px] md:w-[350px] max-h-[70vh] md:max-h-[80vh] overflow-y-auto shadow-2xl pointer-events-auto border border-zinc-800 scrollbar-hide">
-        <h2 className="text-xl font-bold mb-4 flex justify-between items-center">
-          Recent Incidents
-          <span className="text-xs bg-zinc-800 px-2 py-1 rounded text-zinc-400">
-            {incidents.length}
-          </span>
-        </h2>
+      <div className="bg-zinc-900 text-white p-6 rounded-3xl w-full max-w-[400px] md:w-[350px] max-h-[80vh] md:max-h-[80vh] overflow-y-auto shadow-2xl pointer-events-auto border border-zinc-800 scrollbar-hide animate-in fade-in slide-in-from-right-10 duration-300">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-bold flex items-center gap-2">
+            Incidents
+            <span className="text-[10px] bg-zinc-800 px-2 py-0.5 rounded text-zinc-400 font-mono">
+                {incidents.length}
+            </span>
+          </h2>
+          <button 
+            onClick={onClose}
+            className="md:hidden text-zinc-500 hover:text-white transition"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
 
         <div className="space-y-4">
           {incidents.length === 0 ? (
-            <p className="text-zinc-500 text-sm italic">No incidents reported yet.</p>
+            <p className="text-zinc-500 text-xs italic text-center py-8">No reports in this area yet.</p>
           ) : (
             incidents.map((incident) => {
               const isOwner = incident.user === currentUserId;

@@ -49,6 +49,17 @@ function Home() {
             console.log("Connected to socket server");
         });
 
+        socket.on("creditUpdate", ({ userId, credits }) => {
+            const currentUserId = localStorage.getItem("userId");
+            if (userId === currentUserId) {
+                // Fetch fresh user data or update local state if we had a global user context
+                // For now, let's just show a notification and trigger a refresh of Navbar if possible
+                // We'll use a window event to notify the Navbar
+                window.dispatchEvent(new CustomEvent("userUpdate"));
+                console.log(`Credits updated: ${credits}`);
+            }
+        });
+
         socket.on(
             "newIncident",
             (incident) => {
@@ -163,13 +174,21 @@ function Home() {
             <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-4 z-[10000] md:hidden">
                 <button 
                     onClick={() => { setShowForm(!showForm); setShowDashboard(false); }}
-                    className={`px-4 py-2 rounded-full font-bold shadow-lg transition ${showForm ? 'bg-red-500 text-white' : 'bg-zinc-900 text-white border border-zinc-700'}`}
+                    className={`flex items-center gap-2 px-6 py-3 rounded-full font-bold shadow-2xl transition active:scale-95 border ${
+                        showForm 
+                        ? 'bg-red-500 text-white border-red-400' 
+                        : 'bg-zinc-900 text-white border-zinc-700'
+                    }`}
                 >
                     {showForm ? 'Close' : 'Report'}
                 </button>
                 <button 
                     onClick={() => { setShowDashboard(!showDashboard); setShowForm(false); }}
-                    className={`px-4 py-2 rounded-full font-bold shadow-lg transition ${showDashboard ? 'bg-red-500 text-white' : 'bg-zinc-900 text-white border border-zinc-700'}`}
+                    className={`flex items-center gap-2 px-6 py-3 rounded-full font-bold shadow-2xl transition active:scale-95 border ${
+                        showDashboard 
+                        ? 'bg-blue-500 text-white border-blue-400' 
+                        : 'bg-zinc-900 text-white border-zinc-700'
+                    }`}
                 >
                     {showDashboard ? 'Close' : 'List'}
                 </button>

@@ -30,9 +30,12 @@ function Login() {
                 "userId",
                 response.data.user.id
             );
+            localStorage.setItem(
+                "user",
+                JSON.stringify(response.data.user)
+            );
 
             navigate("/");
-            window.location.reload(); // Refresh to update navbar
         } catch (err) {
             alert("Login failed: " + (err.response?.data?.message || err.message));
         }

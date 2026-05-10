@@ -1,4 +1,6 @@
 import Comment from "../models/Comment.js";
+import Incident from "../models/Incident.js";
+import User from "../models/User.js";
 import { getIO } from "../services/socket.js";
 
 export const createComment = async (
@@ -6,13 +8,33 @@ export const createComment = async (
   res
 ) => {
   try {
+    const { incidentId, content } = req.body;
+    
     const comment = await Comment.create({
-      ...req.body,
+      incidentId,
+      content,
       userId: req.user.id
     });
 
     const populatedComment = await Comment.findById(comment._id).populate("userId", "username");
     
+    // Logic for Credential System:
+    // If a user (not the owner) comments, the incident reporter gets credits
+    const incident = await Incident.findById(incidentId);
+    if (incident && incident.user.toString() !== req.user.id) {
+      const reporter = await User.findById(incident.user);
+      if (reporter) {
+        reporter.credits = (reporter.credits || 0) + 5; // +5 credits for helpful report
+        await reporter.save();
+        
+        // Notify the reporter about their new credits
+        getIO().emit("creditUpdate", { 
+          userId: reporter._id, 
+          credits: reporter.credits 
+        });
+      }
+    }
+
     getIO().emit("newComment", populatedComment);
 
     res.status(201).json(populatedComment);

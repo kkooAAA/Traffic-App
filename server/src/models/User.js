@@ -24,6 +24,11 @@ const UserSchema = new mongoose.Schema({
       coordinates: [Number],
     },
   ],
+
+  credits: {
+    type: Number,
+    default: 0
+  }
 });
 
 export default mongoose.model("User", UserSchema);
