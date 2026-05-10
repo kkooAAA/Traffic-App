@@ -27,6 +27,7 @@ function IncidentForm({
   
         <input
           type="text"
+          value={form.title || ""}
           placeholder={t.title_placeholder}
           className="w-full p-3 rounded-xl bg-zinc-800 mb-3 border border-zinc-700 focus:border-red-500 transition-colors outline-none text-sm"
           onChange={(e) =>
@@ -38,6 +39,7 @@ function IncidentForm({
         />
   
         <textarea
+          value={form.description || ""}
           placeholder={t.desc_placeholder}
           className="w-full p-3 rounded-xl bg-zinc-800 mb-3 border border-zinc-700 focus:border-red-500 transition-colors outline-none text-sm min-h-[80px]"
           onChange={(e) =>
