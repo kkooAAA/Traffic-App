@@ -12,6 +12,7 @@ import Map from "../components/Map";
 import IncidentForm from "../components/IncidentForm";
 
 import Dashboard from "../components/Dashboard";
+import { useLanguage } from "../context/LanguageContext";
 
 const API_URL = import.meta.env.VITE_API_BASE_URL || "";
 const SOCKET_URL = API_URL.replace("/api", "");
@@ -19,6 +20,7 @@ const SOCKET_URL = API_URL.replace("/api", "");
 const socket = io(SOCKET_URL);
 
 function Home() {
+    const { t } = useLanguage();
     const [incidents, setIncidents] =
         useState([]);
     const [loading, setLoading] = useState(true);
@@ -113,7 +115,7 @@ function Home() {
     const createIncident = async () => {
         if (!selectedLocation) {
             return alert(
-                "Please click on the map to select a location first"
+                t.select_location
             );
         }
 
@@ -157,7 +159,7 @@ function Home() {
                 <div className="absolute inset-0 bg-black/50 z-[20000] flex items-center justify-center backdrop-blur-sm">
                     <div className="flex flex-col items-center">
                         <div className="w-12 h-12 border-4 border-red-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-                        <p className="text-white font-bold">Loading Map Data...</p>
+                        <p className="text-white font-bold">{t.loading}</p>
                     </div>
                 </div>
             )}
@@ -180,7 +182,7 @@ function Home() {
                         : 'bg-zinc-900 text-white border-zinc-700'
                     }`}
                 >
-                    {showForm ? 'Close' : 'Report'}
+                    {showForm ? t.close : t.report}
                 </button>
                 <button 
                     onClick={() => { setShowDashboard(!showDashboard); setShowForm(false); }}
@@ -190,7 +192,7 @@ function Home() {
                         : 'bg-zinc-900 text-white border-zinc-700'
                     }`}
                 >
-                    {showDashboard ? 'Close' : 'List'}
+                    {showDashboard ? t.close : t.list}
                 </button>
             </div>
 

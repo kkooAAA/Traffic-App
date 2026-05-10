@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import api from "../services/api";
+import { useLanguage } from "../context/LanguageContext";
 
 function CommentSection({ incidentId, socket }) {
+    const { t } = useLanguage();
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState("");
     const [editingComment, setEditingComment] = useState(null);
@@ -93,7 +95,7 @@ function CommentSection({ incidentId, socket }) {
     };
 
     const handleDelete = async (id) => {
-        if (!window.confirm("Delete this comment?")) return;
+        if (!window.confirm(t.delete + "?")) return;
         try {
             await api.delete(`/comments/${id}`);
             setComments(prev => prev.filter(c => c._id !== id));
@@ -104,13 +106,13 @@ function CommentSection({ incidentId, socket }) {
 
     return (
         <div className="mt-4 border-t border-zinc-200 pt-3">
-            <h3 className="text-sm font-bold mb-2">Comments</h3>
+            <h3 className="text-sm font-bold mb-2">{t.comments}</h3>
             
             <div className="max-h-48 overflow-y-auto mb-3 space-y-2 pr-1 custom-scrollbar">
                 {loading && comments.length === 0 ? (
-                    <p className="text-xs text-zinc-500">Loading...</p>
+                    <p className="text-xs text-zinc-500">{t.loading}</p>
                 ) : comments.length === 0 ? (
-                    <p className="text-xs text-zinc-500 italic">No comments yet.</p>
+                    <p className="text-xs text-zinc-500 italic">{t.no_incidents}</p>
                 ) : (
                     comments.map((comment) => (
                         <div key={comment._id} className="bg-zinc-50 p-2 rounded text-xs group">
@@ -118,7 +120,7 @@ function CommentSection({ incidentId, socket }) {
                                 <span className="font-bold text-zinc-700">
                                     {comment.userId?.username || "Unknown"}
                                     {comment.userId?._id === currentUserId && (
-                                        <span className="ml-1 text-[9px] text-red-500 font-normal">(You)</span>
+                                        <span className="ml-1 text-[9px] text-red-500 font-normal">({t.you})</span>
                                     )}
                                 </span>
                                 <div className="flex items-center gap-2">
@@ -134,13 +136,13 @@ function CommentSection({ incidentId, socket }) {
                                                 }}
                                                 className="text-blue-500 hover:text-blue-700"
                                             >
-                                                Edit
+                                                {t.edit}
                                             </button>
                                             <button 
                                                 onClick={() => handleDelete(comment._id)}
                                                 className="text-red-500 hover:text-red-700"
                                             >
-                                                Delete
+                                                {t.delete}
                                             </button>
                                         </div>
                                     )}
@@ -160,13 +162,13 @@ function CommentSection({ incidentId, socket }) {
                                             onClick={() => setEditingComment(null)}
                                             className="text-[10px] bg-zinc-200 px-2 py-0.5 rounded"
                                         >
-                                            Cancel
+                                            {t.cancel}
                                         </button>
                                         <button 
                                             onClick={() => handleUpdate(comment._id)}
                                             className="text-[10px] bg-red-500 text-white px-2 py-0.5 rounded"
                                         >
-                                            Save
+                                            {t.save}
                                         </button>
                                     </div>
                                 </div>
@@ -184,7 +186,7 @@ function CommentSection({ incidentId, socket }) {
                         type="text"
                         value={newComment}
                         onChange={(e) => setNewComment(e.target.value)}
-                        placeholder="Add a comment..."
+                        placeholder={t.add_comment}
                         className={`text-xs p-2 border rounded bg-white transition-colors duration-200 ${
                             newComment ? 'text-red-500 font-medium' : 'text-zinc-800'
                         }`}
@@ -199,13 +201,13 @@ function CommentSection({ incidentId, socket }) {
                                 : 'bg-red-500 text-white hover:bg-red-600 shadow-sm'
                             }`}
                         >
-                            Post Comment
+                            {t.post_comment}
                         </button>
                     </div>
                 </form>
             ) : (
                 <p className="text-[10px] text-zinc-500 text-center italic">
-                    Please login to comment
+                    {t.login_to_comment}
                 </p>
             )}
         </div>

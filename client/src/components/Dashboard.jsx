@@ -1,7 +1,9 @@
 import { useState } from "react";
 import CommentSection from "./CommentSection";
+import { useLanguage } from "../context/LanguageContext";
 
 function Dashboard({ incidents, deleteIncident, socket, onClose }) {
+  const { t } = useLanguage();
   const currentUserId = localStorage.getItem("userId");
   const [expandedIncident, setExpandedIncident] = useState(null);
 
@@ -10,7 +12,7 @@ function Dashboard({ incidents, deleteIncident, socket, onClose }) {
       <div className="bg-zinc-900 text-white p-6 rounded-3xl w-full max-w-[400px] md:w-[350px] max-h-[80vh] md:max-h-[80vh] overflow-y-auto shadow-2xl pointer-events-auto border border-zinc-800 scrollbar-hide animate-in fade-in slide-in-from-right-10 duration-300">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold flex items-center gap-2">
-            Incidents
+            {t.incidents}
             <span className="text-[10px] bg-zinc-800 px-2 py-0.5 rounded text-zinc-400 font-mono">
                 {incidents.length}
             </span>
@@ -27,7 +29,7 @@ function Dashboard({ incidents, deleteIncident, socket, onClose }) {
 
         <div className="space-y-4">
           {incidents.length === 0 ? (
-            <p className="text-zinc-500 text-xs italic text-center py-8">No reports in this area yet.</p>
+            <p className="text-zinc-500 text-xs italic text-center py-8">{t.no_incidents}</p>
           ) : (
             incidents.map((incident) => {
               const isOwner = incident.user === currentUserId;
@@ -51,7 +53,7 @@ function Dashboard({ incidents, deleteIncident, socket, onClose }) {
                       </h3>
                       {isOwner && (
                         <span className="text-[10px] bg-red-500 text-white px-1.5 py-0.5 rounded font-bold">
-                          YOURS
+                          {t.yours}
                         </span>
                       )}
                     </div>
@@ -73,13 +75,13 @@ function Dashboard({ incidents, deleteIncident, socket, onClose }) {
                   </span>
                   <div className="flex items-center gap-2">
                     <span className="text-[10px] uppercase font-bold text-zinc-400">
-                        {incident.type}
+                        {t.types[incident.type] || incident.type}
                     </span>
                     <button 
                         onClick={() => setExpandedIncident(isExpanded ? null : incident._id)}
                         className="text-[10px] bg-zinc-700 px-2 py-0.5 rounded hover:bg-zinc-600 transition"
                     >
-                        {isExpanded ? 'Hide' : 'Comments'}
+                        {isExpanded ? t.close : t.comments}
                     </button>
                   </div>
                 </div>

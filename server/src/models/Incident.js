@@ -12,6 +12,14 @@ const IncidentSchema = new mongoose.Schema({
       "traffic",
       "flood",
       "roadblock",
+      "pothole",
+      "construction",
+      "debris",
+      "animal",
+      "uturn",
+      "breakdown",
+      "light",
+      "other"
     ],
   },
 

@@ -1,15 +1,19 @@
+import { useLanguage } from "../context/LanguageContext";
+
 function IncidentForm({
     form,
     setForm,
     createIncident,
     onClose
   }) {
+    const { t } = useLanguage();
+
     return (
       <div className="fixed inset-0 md:inset-auto md:top-20 md:left-5 flex items-center justify-center md:items-start md:justify-start z-[9999] pointer-events-none p-4">
         <div className="bg-zinc-900 text-white p-6 rounded-3xl w-full max-w-[400px] md:w-[350px] shadow-2xl pointer-events-auto border border-zinc-800 animate-in fade-in zoom-in duration-200">
           <div className="flex justify-between items-center mb-4">
             <h1 className="text-2xl font-bold">
-              Report
+              {t.report_incident}
             </h1>
             <button 
                 onClick={onClose}
@@ -23,7 +27,7 @@ function IncidentForm({
   
         <input
           type="text"
-          placeholder="What happened?"
+          placeholder={t.title_placeholder}
           className="w-full p-3 rounded-xl bg-zinc-800 mb-3 border border-zinc-700 focus:border-red-500 transition-colors outline-none text-sm"
           onChange={(e) =>
             setForm({
@@ -34,7 +38,7 @@ function IncidentForm({
         />
   
         <textarea
-          placeholder="Details..."
+          placeholder={t.desc_placeholder}
           className="w-full p-3 rounded-xl bg-zinc-800 mb-3 border border-zinc-700 focus:border-red-500 transition-colors outline-none text-sm min-h-[80px]"
           onChange={(e) =>
             setForm({
@@ -55,10 +59,11 @@ function IncidentForm({
                 })
             }
             >
-            <option value="accident">Accident</option>
-            <option value="traffic">Traffic</option>
-            <option value="flood">Flood</option>
-            <option value="roadblock">Roadblock</option>
+              {Object.keys(t.types).map((type) => (
+                <option key={type} value={type}>
+                  {t.types[type]}
+                </option>
+              ))}
             </select>
     
             <select
@@ -71,9 +76,9 @@ function IncidentForm({
                 })
             }
             >
-            <option value="low">Low</option>
-            <option value="medium">Medium</option>
-            <option value="high">High</option>
+              <option value="low">{t.severity.low}</option>
+              <option value="medium">{t.severity.medium}</option>
+              <option value="high">{t.severity.high}</option>
             </select>
         </div>
   
@@ -86,7 +91,7 @@ function IncidentForm({
             : 'bg-red-500 text-white hover:bg-red-600 active:scale-95'
           }`}
         >
-          {form.submitting ? 'Reporting...' : 'Submit Report'}
+          {form.submitting ? t.reporting : t.submit_report}
         </button>
         </div>
       </div>
