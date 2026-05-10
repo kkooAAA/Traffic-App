@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import CommentSection from "./CommentSection";
 
 // Fix for default marker icons in Leaflet with Webpack/Vite
 import markerIcon from "leaflet/dist/images/marker-icon.png";
@@ -41,7 +42,7 @@ function LocationMarker({ setSelectedLocation }) {
     );
 }
 
-function Map({ incidents, setSelectedLocation, deleteIncident }) {
+function Map({ incidents, setSelectedLocation, deleteIncident, socket }) {
     const center = [13.7563, 100.5018]; // Bangkok
     const currentUserId = localStorage.getItem("userId");
 
@@ -80,7 +81,7 @@ function Map({ incidents, setSelectedLocation, deleteIncident }) {
                         ]}
                         icon={getMarkerIcon(incident.severity)}
                     >
-                        <Popup>
+                        <Popup minWidth={250}>
                             <div className="p-1">
                                 <div className="flex items-center gap-2">
                                     <h2 className="font-bold text-lg">{incident.title}</h2>
@@ -106,6 +107,8 @@ function Map({ incidents, setSelectedLocation, deleteIncident }) {
                                         Delete
                                     </button>
                                 </div>
+
+                                <CommentSection incidentId={incident._id} socket={socket} />
                             </div>
                         </Popup>
                     </Marker>

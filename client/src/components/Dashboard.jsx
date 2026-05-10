@@ -1,5 +1,9 @@
-function Dashboard({ incidents, deleteIncident }) {
+import { useState } from "react";
+import CommentSection from "./CommentSection";
+
+function Dashboard({ incidents, deleteIncident, socket }) {
   const currentUserId = localStorage.getItem("userId");
+  const [expandedIncident, setExpandedIncident] = useState(null);
 
   return (
     <div className="fixed inset-0 md:inset-auto md:top-20 md:right-5 flex items-center justify-center md:items-start md:justify-start z-[9999] pointer-events-none p-4">
@@ -17,6 +21,7 @@ function Dashboard({ incidents, deleteIncident }) {
           ) : (
             incidents.map((incident) => {
               const isOwner = incident.user === currentUserId;
+              const isExpanded = expandedIncident === incident._id;
               
               return (
                 <div 
@@ -52,14 +57,28 @@ function Dashboard({ incidents, deleteIncident }) {
                 <p className="text-xs text-zinc-400 line-clamp-2 mb-2">
                   {incident.description}
                 </p>
-                <div className="flex justify-between items-center">
+                <div className="flex justify-between items-center mb-2">
                   <span className="text-[10px] text-zinc-500">
                     {new Date(incident.createdAt).toLocaleTimeString()}
                   </span>
-                  <span className="text-[10px] uppercase font-bold text-zinc-400">
-                    {incident.type}
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] uppercase font-bold text-zinc-400">
+                        {incident.type}
+                    </span>
+                    <button 
+                        onClick={() => setExpandedIncident(isExpanded ? null : incident._id)}
+                        className="text-[10px] bg-zinc-700 px-2 py-0.5 rounded hover:bg-zinc-600 transition"
+                    >
+                        {isExpanded ? 'Hide' : 'Comments'}
+                    </button>
+                  </div>
                 </div>
+
+                {isExpanded && (
+                    <div className="border-t border-zinc-700 mt-2 pt-2 text-zinc-200">
+                        <CommentSection incidentId={incident._id} socket={socket} />
+                    </div>
+                )}
               </div>
             );
           })

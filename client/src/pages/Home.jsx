@@ -156,6 +156,7 @@ function Home() {
                     setSelectedLocation
                 }
                 deleteIncident={deleteIncident}
+                socket={socket}
             />
 
             {/* Mobile Toggles */}
@@ -190,6 +191,7 @@ function Home() {
                     incidents={incidents} 
                     deleteIncident={deleteIncident} 
                     onClose={() => setShowDashboard(false)}
+                    socket={socket}
                 />
             </div>
         </div>
