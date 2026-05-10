@@ -9,9 +9,8 @@ function IncidentForm({
     const { t } = useLanguage();
 
     return (
-      <div className="fixed inset-0 md:inset-auto md:top-20 md:left-5 flex items-end md:items-start justify-center md:justify-start z-[9999] pointer-events-none p-0 md:p-4">
-        <div className="bg-zinc-900 text-white p-6 rounded-t-3xl md:rounded-3xl w-full md:max-w-[400px] md:w-[350px] shadow-2xl pointer-events-auto border-t md:border border-zinc-800 animate-slide-up md:animate-fade-in pb-safe">
-          <div className="w-12 h-1.5 bg-zinc-800 rounded-full mx-auto mb-6 md:hidden"></div>
+      <div className="fixed inset-0 md:inset-auto md:top-20 md:left-5 flex items-center justify-center md:items-start md:justify-start z-[9999] pointer-events-none p-4">
+        <div className="bg-zinc-900 text-white p-6 rounded-3xl w-full max-w-[400px] md:w-[350px] shadow-2xl pointer-events-auto border border-zinc-800 animate-in fade-in zoom-in duration-200">
           <div className="flex justify-between items-center mb-4">
             <h1 className="text-2xl font-bold">
               {t.report_incident}

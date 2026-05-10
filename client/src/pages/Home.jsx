@@ -173,31 +173,25 @@ function Home() {
             />
 
             {/* Mobile Toggles */}
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-4 z-[10000] md:hidden w-full px-6 max-w-[400px]">
+            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-4 z-[10000] md:hidden">
                 <button 
                     onClick={() => { setShowForm(!showForm); setShowDashboard(false); }}
-                    className={`flex-1 flex items-center justify-center gap-2 py-4 rounded-2xl font-bold shadow-2xl transition active:scale-95 border ${
+                    className={`flex items-center gap-2 px-6 py-3 rounded-full font-bold shadow-2xl transition active:scale-95 border ${
                         showForm 
                         ? 'bg-red-500 text-white border-red-400' 
-                        : 'bg-zinc-900 text-white border-zinc-700 backdrop-blur-md'
+                        : 'bg-zinc-900 text-white border-zinc-700'
                     }`}
                 >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
-                    </svg>
                     {showForm ? t.close : t.report}
                 </button>
                 <button 
                     onClick={() => { setShowDashboard(!showDashboard); setShowForm(false); }}
-                    className={`flex-1 flex items-center justify-center gap-2 py-4 rounded-2xl font-bold shadow-2xl transition active:scale-95 border ${
+                    className={`flex items-center gap-2 px-6 py-3 rounded-full font-bold shadow-2xl transition active:scale-95 border ${
                         showDashboard 
                         ? 'bg-blue-500 text-white border-blue-400' 
-                        : 'bg-zinc-900 text-white border-zinc-700 backdrop-blur-md'
+                        : 'bg-zinc-900 text-white border-zinc-700'
                     }`}
                 >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z" />
-                    </svg>
                     {showDashboard ? t.close : t.list}
                 </button>
             </div>
